@@ -1,0 +1,20 @@
+{
+    "name": "image_to_pdf",
+    "version": "1.0.0",
+    "description": "combine images to pdf file",
+    "main": "main.js",
+    "type": "module",
+    "scripts": {
+        "start": "node main.js"
+    },
+    "keywords": [
+        "pdf",
+        "image"
+    ],
+    "author": "Wegt-meoh",
+    "license": "ISC",
+    "dependencies": {
+        "pdf-lib": "^1.17.1",
+        "sharp": "^0.33.5"
+    }
+}
