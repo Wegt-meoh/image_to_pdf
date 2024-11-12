@@ -2,6 +2,7 @@ import { PDFDocument } from "pdf-lib";
 import fsPromise from 'node:fs/promises'
 import path from "node:path";
 import { Dirent } from "node:fs";
+import sharp from "sharp";
 
 /**
  * 
@@ -30,6 +31,15 @@ export default async function combineToPdf(orderedImagesPath, outputPath) {
                         break;
                     case '.jpg':
                         pdfImage = await pdfDoc.embedJpg(imageBytes)
+                        break;
+                    case '.webp':
+                    case '.tiff':
+                    case '.gif':
+                    case '.avif':
+                    case '.svg':
+                    case '.raw':
+                        const convertedImageBytes = await sharp(imageBytes).jpeg().toBuffer()
+                        pdfImage = await pdfDoc.embedJpg(convertedImageBytes)
                         break;
                     default:
                         throw new Error(`Unsupported file format: ${ext}`)

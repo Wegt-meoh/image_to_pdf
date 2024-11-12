@@ -35,19 +35,3 @@ export default async function readImagesInOrder(targetDir) {
     }
     ))
 }
-
-/**
- * 
- * @param {Dirent} a 
- * @param {Dirent} b 
- */
-function defaultCompareFunction(a, b) {
-    const serialStringA = a.name.slice(0, a.name.indexOf('_'))
-    const serialStringB = b.name.slice(0, b.name.indexOf('_'))
-
-    if (/[^0-9]/.test(serialStringA || /[^0-9]/.test(serialStringB))) {
-        throw new Error(`Can not get serial number from directory name which is A:${serialStringA} B:${serialStringB}`)
-    }
-
-    return Number.parseInt(serialStringA, 10) - Number.parseInt(serialStringB, 10)
-}
