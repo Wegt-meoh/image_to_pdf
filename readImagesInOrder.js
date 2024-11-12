@@ -5,20 +5,18 @@ import path from 'node:path'
 /**
  * 
  * @param {string} targetDir 
- * @param {(a: Dirent, b: Dirent) => number} getOrder
  */
-export default async function readImagesInOrder(targetDir, getOrder = defaultCompareFunction) {
+export default async function readImagesInOrder(targetDir) {
     const chapterDirentList = await fsPromise.readdir(targetDir, { withFileTypes: true })
     if (!chapterDirentList.every(r => r.isDirectory())) {
         throw new Error('Error directory struct')
     }
 
-    const sortedChapterDirentList = chapterDirentList.sort(getOrder)
     chapterDirentList.forEach(chapterDirent => {
         chapterDirent.parentPath = targetDir
     })
 
-    return Promise.all(sortedChapterDirentList.map(async chapterDirent => {
+    return Promise.all(chapterDirentList.map(async chapterDirent => {
         const imageDirentList = await fsPromise.readdir(
             path.join(chapterDirent.parentPath, chapterDirent.name), { withFileTypes: true }
         )
